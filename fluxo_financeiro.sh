@@ -24,7 +24,19 @@ adicionar_transacao(){
     fi
 
 #Registar no ficheiro
-echo "$(date '+%A-%m-%d');$Tipo;$Categoria;$Valor;$Descricao" >> "$FICHEIRO_DADOS"
+echo "$(date '+%A-%m-%d') | $Tipo | $Categoria | $Valor | $Descricao" >> "$FICHEIRO_DADOS"
 echo "Transação adicionada com sucesso!"
 
+}
+
+#Função paara ver o saldo atual
+ver_saldo(){
+    echo "=== Saldo Atual ==="
+    Receita=$(awk -F';' '$2 == "Receita" {sum += $4} END {print sum}' "$FICHEIRO_DADOS")
+    Despesa=$(awk -F';' '$2 == "Despesa" {sum += $4} END {print sum}' "$FICHEIRO_DADOS")
+    Saldo=$(echo "$Receita - $Despesa" | bc)
+
+    echo "Receitas: € $Receita"
+    echo "Despesas: € $Despesa"
+    echo "Saldo: € $Saldo"
 }

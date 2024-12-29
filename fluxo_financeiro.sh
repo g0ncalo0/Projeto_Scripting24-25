@@ -4,8 +4,8 @@
 FICHEIRO_DADOS="dados_financeiros.txt"
 
 #Função para inicializar o ficheiro de dados
-init_file(){
-    if [[! -f "$FICHEIRO_DADOS"]]; then
+init_ficheiro(){
+    if [[ ! -f "$FICHEIRO_DADOS" ]]; then
         echo "Data;Tipo;Categoria;Valor;Descrição" > "$FICHEIRO_DADOS"
     fi
 }
@@ -40,3 +40,28 @@ ver_saldo(){
     echo "Despesas: € $Despesa"
     echo "Saldo: € $Saldo"
 }
+
+#Função para exportar os dados para CSV
+exportar_csv(){
+    echo "=== Exportar Dados ==="
+    read -p "Digite o nome do arquivo CSV: " nome_ficheiro
+    cp "$FICHEIRO_DADOS" "$nome_ficheiro"
+    echo "Dados exportados para $nome_ficheiro"
+
+    if [ -f "$nome_ficheiro" ]; then
+        echo "O ficheiro $nome_ficheiro existe!"
+    else
+        echo "O ficheiro $nome_ficheiro não foi encontrado."
+    fi
+}
+
+
+
+
+
+
+
+
+
+init_ficheiro
+
